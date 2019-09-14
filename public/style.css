@@ -1,0 +1,198 @@
+#map {
+    height: 100%;
+  }
+  
+#app {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+section {
+    clear: both;
+    display: block;
+}
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  hr {
+    clear: both;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  space {
+    clear: both;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+  
+  section {
+    margin: 20px;
+  }
+  
+  .material-icons {
+    padding-right: 10px;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  h1, h2, h3, p {
+    font-family: 'Montserrant', sans-serif;
+    font-weight: normal;
+  }
+  
+  h1 { 
+    font-size: 48px;
+  }
+  
+  h2 {
+    margin-bottom: 0px;
+  }
+  
+  h3 {
+    margin-bottom: 10px;
+  }
+  
+  label{
+    font-size: 18px;
+  }
+  
+  p {
+    font-size: 18px;
+    margin-top:10px;
+    margin-bottom:0px;
+  }
+  
+  #preferences > p {
+    font-weight: lighter;
+    font-size: 14px;
+  }
+  
+  .preference-container {
+    margin-left: 0px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding-bottom: 5px;
+    border-bottom-style: ridge;
+    border-color: #f9f9f9;
+  }
+  
+  input{
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    font-size: 14px;
+    padding: 4px 0;
+    background: 0 0;
+    text-align: left;
+    color: inherit;
+  }
+  
+  button.clicked{
+    background-color: rgb(60, 67, 154);
+    border-color: rgb(60, 67, 154);
+    color: white;
+    outline-color: rgb(60, 67, 154);
+  }
+  
+  button, button.firebaseui-id-submit.mdl-button--raised.mdl-button--colored{
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #246EB9;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+  color: #246EB9;
+  cursor: default;
+  display: inline-flex;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  height: 36px;
+  justify-content: center;
+  margin: 8px 16px;
+  outline-color: rgb(60, 67, 154);
+  overflow: hidden;
+  padding: 0px 15px;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  }
+  
+  .smallButton1{
+    background-color:#4CB944;
+      -moz-border-radius:12px;
+      -webkit-border-radius:12px;
+      border-radius:12px;
+      border:2px solid #18ab29;
+      display:inline-block;
+      cursor:pointer;
+      color:#FDFFFC;
+      font-family:Arial;
+      font-size:12px;
+      font-weight:bold;
+      padding:12px 20px;
+      text-decoration:none;
+      text-shadow:0px 0px 0px #2f6627;
+  }
+  
+  .smallButton1:hover {
+      background-color:#5cbf2a;
+  }
+  .smallButton1:active {
+      position:relative;
+      top:1px;
+  }
+  
+  /* The sidebar menu */
+  .sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 225px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #F5EE9E; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    padding-left: 20px;
+    border-radius: 2px;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  }
+  
+  /* Style page content */
+  .main {
+    margin-left: 225px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+  
+  /* Style the input container */
+  .sidenav .search-container {
+    float: right;
+    padding-top: 250px;
+  }
+  
+  #rating {
+    align-items: center;
+    font-size: 16px;
+    background-color: #FDFFFC
+  }
