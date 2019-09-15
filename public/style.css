@@ -23,13 +23,6 @@ section {
     margin-top: 20px;
   }
   
-  space {
-    clear: both;
-    margin-bottom: 50px;
-    margin-top: 20px;
-    padding-top: 20px;
-  }
-  
   section {
     margin: 20px;
   }
@@ -40,11 +33,11 @@ section {
   
   body {
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Georgia';
   }
   
   h1, h2, h3, p {
-    font-family: 'Montserrant', sans-serif;
+    font-family: 'Georgia';
     font-weight: normal;
   }
   
@@ -76,24 +69,28 @@ section {
   }
   
   .preference-container {
-    margin-left: 0px;
-    margin-bottom: 5px;
-    margin-right: 5px;
+    margin-bottom: 20px;
+    margin-right: 10px;
     padding-bottom: 5px;
     border-bottom-style: ridge;
     border-color: #f9f9f9;
+    font-size: 18px;
   }
   
   input{
     border: none;
     border-bottom: 1px solid rgba(0,0,0,.12);
-    font-size: 16px;
+    font-size: 18px;
     padding: 4px 0;
     background: 0 0;
     text-align: left;
-    color: inherit;
+    font-family: 'Georgia';
   }
   
+  #result{
+      width: 250px;
+  }
+
   button.clicked{
     background-color: rgb(60, 67, 154);
     border-color: rgb(60, 67, 154);
@@ -101,23 +98,32 @@ section {
     outline-color: rgb(60, 67, 154);
   }
   
+  img{
+    height:100px;
+    float: left;
+    padding-left: 60px;
+    border-radius: 8px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+ }
+
   button, button.firebaseui-id-submit.mdl-button--raised.mdl-button--colored{
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0);
+  align-items: right;
+  background-color: rgb(255, 111, 75);
   border-color: rgb(255, 111, 75);
   border-radius: 4px;
   border-style: solid;
   border-width: 1px;
   box-shadow: none;
-  color: #F06543;
+  color: rgb(29, 17, 15);
   cursor: default;
   display: inline-flex;
-  font-family: Roboto, sans-serif;
+  font-family: Georgia;
   font-size: 14px;
   font-weight: bold;
   height: 24px;
   justify-content: center;
-  margin: 8px 16px;
+  margin: 16px 24px;
   outline-color: rgb(240, 103, 69);
   overflow: hidden;
   padding: 0px 15px;
@@ -127,39 +133,15 @@ section {
   vertical-align: middle;
   }
   
-  .smallButton1{
-    background-color:#F06543;
-	-moz-border-radius:13px;
-	-webkit-border-radius:13px;
-	border-radius:13px;
-	border:1px solid #F06543;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:16px;
-	padding:16px 31px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #F06543;
-  }
-  
-  .smallButton1:hover {
-      background-color:#5cbf2a;
-  }
-  .smallButton1:active {
-      position:relative;
-      top:1px;
-  }
-  
   /* The sidebar menu */
   .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 225px; /* Set the width of the sidebar */
+    width: 250; /* Set the width of the sidebar */
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #F5EE9E; /* Black */
+    background-color: #C3ECB2; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
     padding-left: 20px;

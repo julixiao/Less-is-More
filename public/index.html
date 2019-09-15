@@ -22,6 +22,14 @@
   <div id="map"></div> 
   <!-- Side navigation -->
   <div class="sidenav">
+      <img src="/clipart-fast-food-dishes-plate-9c78.png" />
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
         <div class="preference-container">
           <label>Price Range </label><br>
           <input type = "radio" name="price" value="1"> $
@@ -39,20 +47,21 @@
           </select>
         </div>
         <div class="preference-container">
-            Proximity: <input name="proximity" id="proximity" type="text" /><br/>
+            Proximity: <input name="proximity" id="proximity" type="text" />(m)<br/>
         </div>
-      <button id="submitBtn"></button>
+      <button id="submitBtn">Go!</button>
+      <br>
+      <br>
+      <br>
+      <br>
       <div class="preference-container">
-          Let Us Eat!: <input name="result" id="result" type="text" /><br/>
+          Let Us Eat! <br><input name="result" id="result" type="text" /><br/>
       </div>
 </body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVooDRevFVpLfN_atdlsfG2cmlCBs44QA&libraries=places&callback=initMap" async defer></script>
 <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
 <script>
-  const firebase = require("firebase");
-  // Required for side-effects
-  require("firebase/firestore");  
   var arry = [];
   var picked;
   var service;
@@ -60,7 +69,7 @@
       var waterloo = {
         lat: 43.4726,
         lng: -80.5453
-      };
+      }
       map = new google.maps.Map(document.getElementById('map'), {
         center: waterloo,
         zoom: 13
@@ -150,6 +159,16 @@
     }
     var result = Math.floor(Math.random() * arry.length);
     picked = arry[result][0];
+
+    // db.collection("less-is-more-94ee9").add({
+    // name: picked,
+    // })
+    // .then(function(docRef) {
+    //     console.log("Document written with ID: ", docRef.id);
+    // })
+    // .catch(function(error) {
+    //     console.error("Error adding document: ", error);
+    // });
   }
 
   document.getElementById("submitBtn").onclick = function() {
