@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 
 <head>
@@ -6,11 +8,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script src="..\index.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
-</head> 
-<div id="app">
- 
+  <script defer src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+  <script defer src="./init-firebase.js"></script> 
+</head>  
     <!-- <img src="https://firebasestorage.googleapis.com/v0/b/fir-images-a61c9.appspot.com/o/firestore.png?alt=media&token=56d039dc-4a6c-477b-a153-a4bb8234646f" /> -->
     <!-- <img src="https://firebasestorage.googleapis.com/v0/b/fir-images-a61c9.appspot.com/o/hosting.png?
 
@@ -18,54 +18,143 @@
       <!-- Add the RSVP button here -->
     <!-- <section id="firebaseui-auth-container"></section>-->
     <!-- Map -->
+  <body>
   <div id="map"></div> 
   <!-- Side navigation -->
   <div class="sidenav">
-    <div class >
         <div class="preference-container">
-          <label>Price Range </label>
-          <div id = "price">
-              <input type = "radio" id="onedollar" value="1" checked> $
-              <input type = "radio" id="twodollar" value="2"> $$
-              <input type = "radio" id="threedollar" value="3"> $$$
+          <label>Price Range </label><br>
+          <input type = "radio" name="price" value="1"> $
+          <input type = "radio" name="price" value="2"> $$
+          <input type = "radio" name="price" value="3"> $$$
           </div>          
-        </div>
 
         <div class="preference-container">
           <label>Minimum rating: </label>
           <select id="rating" onchange="getSelectValue();">
-            <option value="5star">5 star</option>
-            <option value="4star">4 star</option>
-            <option value="3star">3 star</option>
-            <option value="2star">2 star</option>
-            <option value="1star">1 star</option>
+            <option value="4">4 star</option>
+            <option value="3">3 star</option>
+            <option value="2">2 star</option>
+            <option value="1">1 star</option>
           </select>
         </div>
-        <br>
         <div class="preference-container">
-            <form id="proximity">
-              <label>Proximity: </label>
-              <input type="text" id="distance">
-              <input type="submit">
-              <i class="material-icons">send</i>
-              <span>SEND</span>
-            </form>
+            Proximity: <input name="proximity" id="proximity" type="text" /><br/>
         </div>
-  </div>
-</div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVooDRevFVpLfN_atdlsfG2cmlCBs44QA&libraries=visualization&callback=initMap" async defer></script>
+      <button id="submitBtn"></button>
+      <div class="preference-container">
+          Let Us Eat!: <input name="result" id="result" type="text" /><br/>
+      </div>
+</body>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVooDRevFVpLfN_atdlsfG2cmlCBs44QA&libraries=places&callback=initMap" async defer></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
 <script>
-  function initMap() {
-    // Create the map.
-    var waterloo = {
-      lat: 43.4726,
-      lng: -80.5453
-    };
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: waterloo,
-      zoom: 13
+  const firebase = require("firebase");
+  // Required for side-effects
+  require("firebase/firestore");  
+  var arry = [];
+  var picked;
+  var service;
+    function initMap() {
+      var waterloo = {
+        lat: 43.4726,
+        lng: -80.5453
+      };
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: waterloo,
+        zoom: 13
+      });
+      // Create the places service.
+      service = new google.maps.places.PlacesService(map);
+      var getNextPage = null;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          waterloo = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          map.setCenter(waterloo);
+          // Perform a nearby search.
+          searchy(500);
+        });
+      } else {
+        // Perform a nearby search.
+        searchy(500);
+      }
+    }
 
-    });
+    function searchy(rad) {
+      service.nearbySearch({
+          location: map.getCenter(),
+          radius: rad,
+          type: ['restaurant']
+        },
+        function(results, status, pagination) {
+          if (status !== 'OK') return;
+
+          var bounds = new google.maps.LatLngBounds();
+          var placesList = document.getElementById('places');
+
+          for (var i = 0, place; place = results[i]; i++) {
+
+            var request = {
+              placeId: place.place_id,
+              fields: ['name', 'formatted_address', 'place_id', 'geometry', 'price_level', 'rating']
+            };
+
+            var infowindow = new google.maps.InfoWindow();
+            var service = new google.maps.places.PlacesService(map);
+
+
+            service.getDetails(request, function(place, status) {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                var marker = new google.maps.Marker({
+                  map: map,
+                  position: place.geometry.location
+                });
+                google.maps.event.addListener(marker, 'click', function() {
+                  infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                    'Place ID: ' + place.place_id + '<br>' +
+                    place.formatted_address + '<br>Price: ' + place.price_level + ' Rating: ' + place.rating + '</div>');
+                  infowindow.open(map, this);
+                });
+                arry.push([place.name, place.formatted_address, place.price_level, place.rating])
+              }
+            });
+
+            bounds.extend(place.geometry.location);
+          }
+          map.fitBounds(bounds);
+          getNextPage = pagination.hasNextPage && function() {
+            pagination.nextPage();
+          };
+        });
+    }
+
+  function getSelectValue(){
+    return parseInt(document.getElementById("rating").value, 10);
+  }
+
+  function filter (){
+    var price_level = parseInt(document.querySelector('input[name="price"]:checked').value, 10);
+    var selectedValue = getSelectValue();
+    var proximity = parseInt(document.getElementById('proximity').value, 10);
+    searchy(proximity);
+    var i;
+    for(i=0; i< arry.length; i++){
+        if(arry[i][2] > price_level || arry[i][3] < selectedValue){
+          arry.splice(i, 1);
+          i--;
+        }
+    }
+    var result = Math.floor(Math.random() * arry.length);
+    picked = arry[result][0];
+  }
+
+  document.getElementById("submitBtn").onclick = function() {
+    filter();
+    document.getElementById('result').value = picked;
   }
 </script>
 </html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <link type="text/css" rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Montserrat:100&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+  <script defer src="./init-firebase.js"></script>
+</head>  
+    <!-- <img src="https://firebasestorage.googleapis.com/v0/b/fir-images-a61c9.appspot.com/o/firestore.png?alt=media&token=56d039dc-4a6c-477b-a153-a4bb8234646f" /> -->
+    <!-- <img src="https://firebasestorage.googleapis.com/v0/b/fir-images-a61c9.appspot.com/o/hosting.png?
+
+  <section id="event-details-container" -->
+      <!-- Add the RSVP button here -->
+    <!-- <section id="firebaseui-auth-container"></section>-->
+    <!-- Map -->
+  <body>
+  <div id="map"></div> 
+  <!-- Side navigation -->
+  <div class="sidenav">
+    <form action="/goEat" method="post">
+        <div class="preference-container">
+          <label>Price Range </label><br>
+          <input type = "radio" name="price" value="1"> $
+          <input type = "radio" name="price" value="2"> $$
+          <input type = "radio" name="price" value="3"> $$$
+          </div>          
+
+        <div class="preference-container">
+          <label>Minimum rating: </label>
+          <select id="rating" onchange="getSelectValue();">
+            <option value="5star">5 star</option>
+            <option value="4star">4 star</option>
+            <option value="3star">3 star</option>
+            <option value="2star">2 star</option>
+            <option value="1star">1 star</option>
+          </select>
+        </div>
+        <br>
+        <div class="preference-container">
+            Proximity: <input name="proximity" type="text" /> <br />
+        </div>
+        <input type="submit">
+      </form>
+      <div class="preference-container">
+          <label>Chosen destination</label>
+        <script>LIBRARY.transfer();</script>
+        </div>
+    </div>
+</body>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVooDRevFVpLfN_atdlsfG2cmlCBs44QA&libraries=places&callback=initMap" async defer></script>
+<script>
+    function initMap() {    
+      var waterloo = {
+        lat: 43.4726,
+        lng: -80.5453
+      };
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: waterloo,
+        zoom: 13
+      });
+      // Create the places service.
+  var service = new google.maps.places.PlacesService(map);
+  var getNextPage = null;
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      waterloo = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      map.setCenter(waterloo);
+  // Perform a nearby search.
+  service.nearbySearch({
+      location: waterloo,
+      radius: 500,
+      type: ['restaurant']
+    },
+    function(results, status, pagination) {
+      if (status !== 'OK') return;
+
+      var bounds = new google.maps.LatLngBounds();
+  var placesList = document.getElementById('places');
+
+  for (var i = 0, place; place = results[i]; i++) {
+
+    var request = {
+      placeId: place.place_id,
+      fields: ['name', 'formatted_address', 'place_id', 'geometry', 'price_level', 'rating']
+    };
+
+    var infowindow = new google.maps.InfoWindow();
+    var service = new google.maps.places.PlacesService(map);
+
+    service.getDetails(request, function(place, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            'Place ID: ' + place.place_id + '<br>' +
+            place.formatted_address + '<br>Price: ' + place.price_level + ' Rating: ' + place.rating + '</div>');
+          infowindow.open(map, this);
+        });
+      }
+    });
+
+    bounds.extend(place.geometry.location);
+  }
+  map.fitBounds(bounds);
+      getNextPage = pagination.hasNextPage && function() {
+        pagination.nextPage();
+      };
+    });
+    });
+  }
+  else {
+      // Perform a nearby search.
+  service.nearbySearch({
+      location: waterloo,
+      radius: 500,
+      type: ['restaurant']
+    },
+    function(results, status, pagination) {
+      if (status !== 'OK') return;
+
+      var bounds = new google.maps.LatLngBounds();
+  var placesList = document.getElementById('places');
+
+  for (var i = 0, place; place = results[i]; i++) {
+
+    var request = {
+      placeId: place.place_id,
+      fields: ['name', 'formatted_address', 'place_id', 'geometry', 'price_level', 'rating']
+    };
+
+    var infowindow = new google.maps.InfoWindow();
+    var service = new google.maps.places.PlacesService(map);
+
+    service.getDetails(request, function(place, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            'Place ID: ' + place.place_id + '<br>' +
+            place.formatted_address + '<br>Price: ' + place.price_level + ' Rating: ' + place.rating + '</div>');
+          infowindow.open(map, this);
+        });
+      }
+    });
+
+    bounds.extend(place.geometry.location);
+  }
+  map.fitBounds(bounds);
+      getNextPage = pagination.hasNextPage && function() {
+        pagination.nextPage();
+      };
+    });
+  }
+}
+</script>
+</html>
