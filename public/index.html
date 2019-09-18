@@ -128,7 +128,7 @@
                     place.formatted_address + '<br>Price: ' + place.price_level + ' Rating: ' + place.rating + '</div>');
                   infowindow.open(map, this);
                 });
-                arry.push([place.name, place.formatted_address, place.price_level, place.rating])
+                arry.push([place.name, place.formatted_address, place.price_level, place.rating, place.geometry.location])
               }
             });
 
@@ -158,7 +158,7 @@
         }
     }
     var result = Math.floor(Math.random() * arry.length);
-    picked = arry[result][0];
+    picked = arry[result];
 
     // db.collection("less-is-more-94ee9").add({
     // name: picked,
@@ -173,7 +173,9 @@
 
   document.getElementById("submitBtn").onclick = function() {
     filter();
-    document.getElementById('result').value = picked;
+    map.setCenter(picked[4]);
+    map.setZoom(15);
+    document.getElementById('result').value = picked[0];
   }
 </script>
 </html>
